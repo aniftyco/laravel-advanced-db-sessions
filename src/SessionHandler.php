@@ -4,8 +4,9 @@ namespace NiftyCo\AdvancedDatabaseSessions;
 
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\Guard;
+use Illuminate\Session\DatabaseSessionHandler;
 
-class DatabaseSessionHandler extends \Illuminate\Session\DatabaseSessionHandler
+class SessionHandler extends DatabaseSessionHandler
 {
     private ?object $session = null;
 
@@ -14,8 +15,6 @@ class DatabaseSessionHandler extends \Illuminate\Session\DatabaseSessionHandler
         if (!is_null($this->session = $this->getQuery()->find($sessionId))) {
             $this->session = (object) $this->session;
         }
-
-        info('session read: ' . json_encode($this->session));
 
         if ($this->expired($this->session)) {
             $this->exists = true;

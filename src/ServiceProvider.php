@@ -2,11 +2,10 @@
 
 namespace NiftyCo\AdvancedDatabaseSessions;
 
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Session;
+use Illuminate\{Contracts\Foundation\Application, Support};
 
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
+class ServiceProvider extends Support\ServiceProvider
 {
     /**
      * Register any application services.
@@ -21,12 +20,12 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function boot(): void
     {
-        Session::extend('database', function (Application $app) {
+        Support\Facades\Session::extend('advanced-database', function (Application $app) {
             $table = $app['config']->get('session.table');
             $lifetime = $app['config']->get('session.lifetime');
             $connection = $app['db']->connection($app['config']->get('session.connection'));
 
-            return new DatabaseSessionHandler($connection, $table, $lifetime, $app);
+            return new SessionHandler($connection, $table, $lifetime, $app);
         });
     }
 }
