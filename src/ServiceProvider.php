@@ -27,5 +27,9 @@ class ServiceProvider extends Support\ServiceProvider
 
             return new SessionHandler($connection, $table, $lifetime, $app);
         });
+
+        $this->publishesMigrations([
+            __DIR__ . '/../database/migrations' => database_path('migrations'),
+        ]);
     }
 }
