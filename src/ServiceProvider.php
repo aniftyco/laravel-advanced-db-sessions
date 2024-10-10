@@ -30,6 +30,6 @@ class ServiceProvider extends Support\ServiceProvider
 
         $this->publishesMigrations([
             __DIR__ . '/../database/migrations' => database_path('migrations'),
-        ]);
+        ], 'advanced-sessions');
     }
 }
